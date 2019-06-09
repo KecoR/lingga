@@ -1,0 +1,30 @@
+* {
+    margin: 0;
+    padding: 0;
+    /* box-sizing: border-box; */
+    background-color: whitesmoke;
+}
+
+nav {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 8vh;
+    background-color: white;
+}
+
+.logo > h3 {
+    margin: 0 10px;
+    color: #1F618D;
+    text-transform: uppercase;
+}
+
+.logo > h4 {
+    margin: 0 10px;
+    color: #D35400;
+    text-transform: uppercase;
+}
+
+.list-nav {
+    
+}
