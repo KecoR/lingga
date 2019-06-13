@@ -1,6 +1,6 @@
 <?php
 
-    $koneksi = new mysqli("localhost","root","","db_lingga");
+    $koneksi = new mysqli("localhost","mysqluser","mysql","db_lingga");
 
     if(isset($_POST["lid"])) {
         $cek = $_POST["lid"];

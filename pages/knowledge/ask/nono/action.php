@@ -1,6 +1,6 @@
 <?php
     session_start();
-    $koneksi = new mysqli("localhost","root","","db_lingga");
+    $koneksi = new mysqli("localhost","mysqluser","mysql","db_lingga");
     $user = $_SESSION['user'];
     $parent = $_POST['knowledge'];
     $child = $_POST['child'];
@@ -15,7 +15,7 @@
         ?>
             <script>
                 alert ("Data Berhasil Disimpan");
-                window.location.href="/lingga/?page=knowledge";
+                window.location.href="/?page=knowledge";
             </script>
         <?php
     }

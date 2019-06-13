@@ -50,7 +50,7 @@
                                 ?>
                                     <script>
                                         alert("Maaf proses gagal. Tolong pilih opsi lain");
-                                        window.location.href="/lingga/?page=knowledge&aksi=tambah";
+                                        window.location.href="?page=knowledge&aksi=tambah";
                                     </script>
                                 <?php
                             }

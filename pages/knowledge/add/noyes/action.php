@@ -1,5 +1,5 @@
 <?php
-    $koneksi = new mysqli("localhost","root","","db_lingga");
+    $koneksi = new mysqli("localhost","mysqluser","mysql","db_lingga");
     $parent = $_POST['knowledge'];
     $child = $_POST['child'];
     $info = $_POST['info'];
@@ -27,7 +27,7 @@
                     <script type="text/javascript">
                         
                         alert ("Data Berhasil Disimpan");
-                        window.location.href="/lingga/?page=knowledge";
+                        window.location.href="/?page=knowledge";
 
                     </script>
                 <?php
