@@ -1,5 +1,9 @@
 <?php
   error_reporting(0);
+
+  $koneksi = new mysqli("localhost","root","","db_lingga");
+
+  session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +14,7 @@
   <title>Lawride Lawyer - Home</title>
 	<link rel="icon" href="img/Fevicon.png" type="image/png">
 
-  <link rel="stylesheet" href="vendors/bootstrap/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="vendors/bootstrap/bootstrap.min.css"> -->
   <link rel="stylesheet" href="vendors/fontawesome/css/all.min.css">
   <link rel="stylesheet" href="vendors/themify-icons/themify-icons.css">
   <link rel="stylesheet" href="vendors/linericon/style.css">
@@ -34,6 +38,8 @@
   <!-- Template CSS -->
   <!-- <link rel="stylesheet" href="assets/css/style.css"> -->
   <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+
   <!-- Start GA -->
 </head>
 <body>
@@ -54,7 +60,17 @@
               <li class="nav-item active"><a class="nav-link" href="?page=index">Home</a></li> 
               <li class="nav-item"><a class="nav-link" href="?page=knowledge">Knowledge</a>
               <li class="nav-item"><a class="nav-link" href="?page=contact">Contact</a></li>
-              <li class="nav-item"><a class="nav-link" href="?page=login">Login</a></li>
+              <?php
+                if($_SESSION['user'] || $_SESSION['admin']){
+              ?>
+                <li class="nav-item"><a class="nav-link" href="?page=logout">Logout</a></li>
+              <?php
+                } else {
+              ?>
+                <li class="nav-item"><a class="nav-link" href="?page=login">Login</a></li>
+              <?php
+                }
+              ?>
             </ul>
           </div> 
         </div>
@@ -76,25 +92,27 @@
         include "pages/contact.php";
       } elseif ($page == "login") {
         include "pages/login.php";
+      } elseif($page == "logout"){
+        include "pages/logout.php";
       } elseif ($page == "") {
         include "pages/home.php";
-      }
+      } 
     ?>
   </section>
   <!--================ Hero Banner end =================-->
 
   <script src="vendors/jquery/jquery-3.2.1.min.js"></script>
-  <script src="vendors/bootstrap/bootstrap.bundle.min.js"></script>
+  <!-- <script src="vendors/bootstrap/bootstrap.bundle.min.js"></script> -->
   <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
   <script src="vendors/Magnific-Popup/jquery.magnific-popup.min.js"></script>
-  <script src="js/jquery.ajaxchimp.min.js"></script>
+  <!-- <script src="assets/js/jquery.ajaxchimp.min.js"></script>
   <script src="js/mail-script.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/main.js"></script> -->
 
   <!-- General JS Scripts -->
   <script src="assets/modules/jquery.min.js"></script>
-  <script src="assets/modules/popper.js"></script>
-  <script src="assets/modules/tooltip.js"></script>
+  <!-- <script src="assets/modules/popper.js"></script>
+  <script src="assets/modules/tooltip.js"></script> -->
   <script src="assets/modules/bootstrap/js/bootstrap.min.js"></script>
   <script src="assets/modules/nicescroll/jquery.nicescroll.min.js"></script>
   <script src="assets/modules/moment.min.js"></script>
@@ -105,14 +123,34 @@
   <script src="assets/modules/chart.min.js"></script>
   <script src="assets/modules/jqvmap/dist/jquery.vmap.min.js"></script>
   <script src="assets/modules/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-  <script src="assets/modules/summernote/summernote-bs4.js"></script>
+  <!-- <script src="assets/modules/summernote/summernote-bs4.js"></script> -->
   <script src="assets/modules/chocolat/dist/js/jquery.chocolat.min.js"></script>
 
   <!-- Page Specific JS File -->
-  <script src="assets/js/page/index-0.js"></script>
+  <!-- <script src="assets/js/page/index-0.js"></script> -->
   
   <!-- Template JS File -->
   <script src="assets/js/scripts.js"></script>
   <script src="assets/js/custom.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+  <!-- <script src="assets/js/jquery.js"></script> -->
+  <script>
+  $(document).ready(function(){
+    $("#myTable").DataTable();
+  });
+  $(document).ready(function(){
+    $("#knowledge").change(function(){
+        var lid = $("#knowledge").val();
+        $.ajax({
+            url: 'child.php',
+            method: 'POST',
+            data: 'lid=' +lid
+        }).done(function(child){
+            // console.log(child);
+            $('#child').html(child);
+        });
+    });
+  });
+  </script>
 </body>
 </html>

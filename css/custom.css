@@ -119,4 +119,11 @@
 .margin-top {
   margin-top: 25px;
 }
+
+.main-content {
+  padding-left: 280px;
+  padding-right: 30px;
+  padding-top: 25px;
+  width: 100%;
+  position: relative; }
   

@@ -1,3 +1,14 @@
+<?php
+  error_reporting(0);
+  ob_start();
+
+  session_start();
+
+  if($_SESSION['user'] || $_SESSION['admin']) {
+    header("location:index.php");
+  } else {
+?>
+
 <div id="app">
     <section class="section">
       <div class="container">
@@ -8,12 +19,12 @@
               <div class="card-header"><h4>Login</h4></div>
 
               <div class="card-body">
-                <form method="POST" action="#" class="needs-validation" novalidate="">
+                <form method="POST" class="needs-validation" novalidate="">
                   <div class="form-group">
-                    <label for="email">Email</label>
-                    <input id="email" type="email" class="form-control" name="email" tabindex="1" required autofocus>
+                    <label for="username">Username</label>
+                    <input id="username" type="username" class="form-control" name="username" tabindex="1" required autofocus>
                     <div class="invalid-feedback">
-                      Please fill in your email
+                      Please fill in your username
                     </div>
                   </div>
 
@@ -28,9 +39,7 @@
                   </div>
 
                   <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
-                      Login
-                    </button>
+                    <input type="submit" value="Login" name="login" class="btn btn-primary btn-lg btn-block" tabindex="4">
                   </div>
                 </form>
               </div>
@@ -40,3 +49,37 @@
       </div>
     </section>
   </div>
+
+<?php
+    if(isset($_POST['login'])) {
+      $username = $_POST['username'];
+      $password = $_POST['password'];
+
+      $ambil = $koneksi->query("SELECT * FROM tbluser where username='$username' AND pass='$password'");
+
+      $data = $ambil->fetch_assoc();
+      
+      if($ambil->num_rows >= 1) {
+        session_start();
+
+        $_SESSION[username] = $data[username];
+        $_SESSION[pass] = $data[pass];
+        $_SESSION[level] = $data[level];
+
+        if($data['level'] == "admin"){
+          $_SESSION['admin'] = $data[id];
+          header("location:index.php");
+        } else if($data['level']== "user"){
+          $_SESSION['user'] = $data[id];
+          header("location:index.php");
+        }
+      } else {
+        ?>
+          <script type="text/javascript">
+              alert("Login Gagal Username dan Password Salah.. Silahkan Ulangi Lagi");
+          </script>
+        <?php
+      }
+    }
+  }
+?>
